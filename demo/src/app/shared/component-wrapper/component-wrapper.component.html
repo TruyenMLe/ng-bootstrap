@@ -1,9 +1,9 @@
 <div class="container-fluid">
   <div class="row flex-xl-nowrap">
-    <div class="col-12 col-lg-2"
+    <div class="col-xs-12 col-md-2"
       style="border-right: 1px solid rgba(0, 0, 0, 0.1)">
       <div
-        class="d-lg-none d-flex py-2 px-4 align-items-center text-body sidebar-collapsed"
+        class="visible-xs d-flex py-2 px-4 align-items-center text-body sidebar-collapsed"
         (click)="sidebarCollapsed = !sidebarCollapsed"
         role="button"
       >
@@ -24,7 +24,7 @@
       ></ngbd-side-nav>
     </div>
 
-    <div class="col-12 col-lg-10">
+    <div class="col-xs-12 col-md-10">
       <header class="bg-light pt-4 pb-md-5 px-4 px-lg-5 d-flex d-md-block align-items-center title">
         <h1 class="mb-4 mr-auto mr-md-none">{{ component | titlecase }}</h1>
 
@@ -60,11 +60,11 @@
       </header>
 
       <section class="row py-5 px-2 px-md-4 px-lg-5">
-        <div class="col-12 col-xl-9 px-md-0 pr-xl-4">
+        <div class="col-xs-12 col-sm-9 px-md-0 pr-xl-4">
           <router-outlet (activate)="updateNavigation($event)"></router-outlet>
         </div>
 
-        <div class="col-12 col-xl-3 d-none d-xl-block contextual-nav" *ngIf="!isLargeScreenOrLess">
+        <div class="col-xs-12 col-sm-3 d-none d-xl-block contextual-nav" *ngIf="!isLargeScreenOrLess">
           <ul class="nav flex-column text-muted pt-4">
             <li *ngFor="let topic of tableOfContent" class="nav-item">
               <a *ngIf="topic.title else divider" class="nav-link" [routerLink]="['.', this.activeTab]" [fragment]="topic.fragment">{{topic.title}}</a>

@@ -7,7 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   encapsulation: ViewEncapsulation.None,
   styles: [`
     .dark-modal .modal-content {
-      background-color: #292b2c;
+      background-color: #34495e;
       color: white;
     }
     .dark-modal .close {

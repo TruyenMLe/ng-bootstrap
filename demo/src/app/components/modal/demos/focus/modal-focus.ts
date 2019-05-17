@@ -5,7 +5,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   selector: 'ngbd-modal-confirm',
   template: `
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">Profile deletion</h4>
+    <h3 class="modal-title pull-left" id="modal-title">Profile deletion</h3>
     <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -17,7 +17,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
     </p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+    <button type="button" class="btn btn-default" (click)="modal.dismiss('cancel click')">Cancel</button>
     <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
   </div>
   `
@@ -30,7 +30,7 @@ export class NgbdModalConfirm {
   selector: 'ngbd-modal-confirm-autofocus',
   template: `
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">Profile deletion</h4>
+    <h3 class="modal-title pull-left" id="modal-title">Profile deletion</h3>
     <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -42,7 +42,7 @@ export class NgbdModalConfirm {
     </p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+    <button type="button" class="btn btn-default" (click)="modal.dismiss('cancel click')">Cancel</button>
     <button type="button" ngbAutofocus class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
   </div>
   `
