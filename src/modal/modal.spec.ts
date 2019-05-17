@@ -789,20 +789,6 @@ describe('ngb-modal', () => {
       });
     });
 
-    describe('vertically centered', () => {
-
-      it('should render modals vertically centered', () => {
-        const modalInstance = fixture.componentInstance.open('foo', {centered: true});
-        fixture.detectChanges();
-        expect(fixture.nativeElement).toHaveModal('foo');
-        expect(document.querySelector('.modal-dialog')).toHaveCssClass('modal-dialog-centered');
-
-        modalInstance.close();
-        fixture.detectChanges();
-        expect(fixture.nativeElement).not.toHaveModal();
-      });
-    });
-
     describe('accessibility', () => {
 
       it('should support aria-labelledby', () => {

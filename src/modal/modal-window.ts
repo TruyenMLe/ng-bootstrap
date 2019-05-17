@@ -8,7 +8,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output
+  Output,
+  ViewEncapsulation
 } from '@angular/core';
 
 import {getFocusableBoundaryElements} from '../util/focus-trap';
@@ -17,7 +18,7 @@ import {ModalDismissReasons} from './modal-dismiss-reasons';
 @Component({
   selector: 'ngb-modal-window',
   host: {
-    '[class]': '"modal fade show d-block" + (windowClass ? " " + windowClass : "")',
+    '[class]': '"modal fade in" + (windowClass ? " " + windowClass : "")',
     'role': 'dialog',
     'tabindex': '-1',
     '(keyup.esc)': 'escKey($event)',
@@ -26,10 +27,12 @@ import {ModalDismissReasons} from './modal-dismiss-reasons';
     '[attr.aria-labelledby]': 'ariaLabelledBy',
   },
   template: `
-    <div [class]="'modal-dialog' + (size ? ' modal-' + size : '') + (centered ? ' modal-dialog-centered' : '')" role="document">
+    <div [class]="'modal-dialog' + (size ? ' modal-' + size : '')" role="document">
         <div class="modal-content"><ng-content></ng-content></div>
     </div>
-    `
+    `,
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./modal.scss']
 })
 export class NgbModalWindow implements OnInit,
     AfterViewInit, OnDestroy {
@@ -37,7 +40,6 @@ export class NgbModalWindow implements OnInit,
 
   @Input() ariaLabelledBy: string;
   @Input() backdrop: boolean | string = true;
-  @Input() centered: string;
   @Input() keyboard = true;
   @Input() size: string;
   @Input() windowClass: string;
