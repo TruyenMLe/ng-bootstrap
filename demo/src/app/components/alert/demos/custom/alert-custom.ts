@@ -5,9 +5,8 @@ import { Component } from '@angular/core';
   templateUrl: './alert-custom.html',
   styles: [`
     :host >>> .alert-custom {
-      color: #99004d;
-      background-color: #f169b4;
-      border-color: #800040;
+      color: #ffffff;
+      background-color: #1abc9c;
     }
   `]
 })

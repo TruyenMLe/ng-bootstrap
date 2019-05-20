@@ -45,8 +45,7 @@ export class NgbAlert implements OnInit,
   /**
    * Type of the alert.
    *
-   * Bootstrap provides styles for the following types: `'success'`, `'info'`, `'warning'`, `'danger'`, `'primary'`,
-   * `'secondary'`, `'light'` and `'dark'`.
+   * Bootstrap provides styles for the following types: `'success'`, `'info'`, `'warning'`, `'danger'`
    */
   @Input() type: string;
   /**
