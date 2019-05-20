@@ -47,6 +47,10 @@ ngbd-table-complete span.ngb-highlight {
   align-items: center;
 }
 
+.justify-content-between {
+  justify-content: space-between;
+}
+
 .d-flex {
   display: flex;
 }
@@ -67,6 +71,10 @@ ngbd-table-complete span.ngb-highlight {
   background: #f8f9fa;
 }
 
+.m-0 {
+  margin: 0;
+}
+
 .mb-2 {
   margin-bottom: 20px;
 }
@@ -77,6 +85,10 @@ ngbd-table-complete span.ngb-highlight {
 
 .mb-4 {
   margin-bottom: 40px;
+}
+
+.ml-2 {
+  margin-left: 20px;
 }
 
 .mr-2 {
@@ -97,8 +109,16 @@ ngbd-table-complete span.ngb-highlight {
   margin-bottom: 40px;
 }
 
+.p-0 {
+  padding: 0;
+}
+
 .p-3 {
   padding: 30px;
+}
+
+.pl-0 {
+  padding-left: 0;
 }
 
 .py-3 {

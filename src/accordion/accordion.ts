@@ -17,6 +17,7 @@ import {
 import {isString} from '../util/util';
 
 import {NgbAccordionConfig} from './accordion-config';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 let nextId = 0;
 
@@ -40,11 +41,9 @@ export interface NgbPanelHeaderContext {
  * @since 4.1.0
  */
 @Directive({
-  selector: 'button[ngbPanelToggle]',
+  selector: 'a[ngbPanelToggle]',
   host: {
-    'type': 'button',
-    '[disabled]': 'panel.disabled',
-    '[class.collapsed]': '!panel.isOpen',
+    '[attr.disabled]': 'panel.disabled',
     '[attr.aria-expanded]': 'panel.isOpen',
     '[attr.aria-controls]': 'panel.id',
     '(click)': 'accordion.toggle(panel.id)'
@@ -124,8 +123,7 @@ export class NgbPanel implements AfterContentChecked {
   /**
    * Type of the current panel.
    *
-   * Bootstrap provides styles for the following types: `'success'`, `'info'`, `'warning'`, `'danger'`, `'primary'`,
-   * `'secondary'`, `'light'` and `'dark'`.
+   * Bootstrap provides styles for the following types: `'success'`, `'info'`, `'warning'`, `'danger'`, `'primary'`
    */
   @Input() type: string;
 
@@ -179,28 +177,49 @@ export interface NgbPanelChangeEvent {
 @Component({
   selector: 'ngb-accordion',
   exportAs: 'ngbAccordion',
-  host: {'class': 'accordion', 'role': 'tablist', '[attr.aria-multiselectable]': '!closeOtherPanels'},
+  host: {'class': 'panel-group', 'role': 'tablist', '[attr.aria-multiselectable]': '!closeOtherPanels'},
   template: `
     <ng-template #t ngbPanelHeader let-panel>
-      <button class="btn btn-link" [ngbPanelToggle]="panel">
-        {{panel.title}}<ng-template [ngTemplateOutlet]="panel.titleTpl?.templateRef"></ng-template>
-      </button>
+      <h4 class="panel-title">
+        <a href="javascript:;" class="accordion-toggle" [ngbPanelToggle]="panel">
+          <span [ngClass]="{'text-muted': panel.disabled}">{{panel.title}}</span>
+          <ng-template [ngTemplateOutlet]="panel.titleTpl?.templateRef"></ng-template>
+        </a>
+      </h4>
     </ng-template>
     <ng-template ngFor let-panel [ngForOf]="panels">
-      <div class="card">
-        <div role="tab" id="{{panel.id}}-header" [class]="'card-header ' + (panel.type ? 'bg-'+panel.type: type ? 'bg-'+type : '')">
+      <div [class]="(panel.type ? 'panel-'+panel.type: type ? 'panel-'+type : '') + ' panel'">
+        <div role="tab" id="{{panel.id}}-header" [class]="'panel-heading'">
           <ng-template [ngTemplateOutlet]="panel.headerTpl?.templateRef || t"
                        [ngTemplateOutletContext]="{$implicit: panel, opened: panel.isOpen}"></ng-template>
         </div>
-        <div id="{{panel.id}}" role="tabpanel" [attr.aria-labelledby]="panel.id + '-header'"
-             class="collapse" [class.show]="panel.isOpen" *ngIf="!destroyOnHide || panel.isOpen">
-          <div class="card-body">
+        <div id="{{panel.id}}" role="tabpanel" [attr.aria-labelledby]="panel.id + '-header'" #panelContent
+             class="panel-collapse" [@openClose]="panel.isOpen ? 'collapseIn' : 'collapse'">
+          <div class="panel-body">
                <ng-template [ngTemplateOutlet]="panel.contentTpl?.templateRef"></ng-template>
           </div>
         </div>
       </div>
     </ng-template>
-  `
+  `,
+  animations: [
+    trigger('openClose', [
+      state('collapseIn', style({
+        height: '*',
+        overflow: 'hidden'
+      })),
+      state('collapse', style({
+        height: '0px',
+        overflow: 'hidden'
+      })),
+      transition('collapseIn => collapse', [
+        animate('0.5s ease')
+      ]),
+      transition('collapse => collapseIn', [
+        animate('0.5s ease')
+      ])
+    ])
+  ]
 })
 export class NgbAccordion implements AfterContentChecked {
   @ContentChildren(NgbPanel) panels: QueryList<NgbPanel>;
