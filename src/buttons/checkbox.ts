@@ -1,7 +1,8 @@
-import {ChangeDetectorRef, Directive, forwardRef, Input} from '@angular/core';
+import {ChangeDetectorRef, Directive, forwardRef, HostBinding, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 import {NgbButtonLabel} from './label';
+import {DomSanitizer} from '@angular/platform-browser';
 
 const NGB_CHECKBOX_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -24,12 +25,17 @@ const NGB_CHECKBOX_VALUE_ACCESSOR = {
     '[disabled]': 'disabled',
     '(change)': 'onInputChange($event)',
     '(focus)': 'focused = true',
-    '(blur)': 'focused = false'
+    '(blur)': 'focused = false',
+    '[style.position]': '"absolute"',
+    '[style.pointer-events]': '"none"'
   },
   providers: [NGB_CHECKBOX_VALUE_ACCESSOR]
 })
 export class NgbCheckBox implements ControlValueAccessor {
   checked;
+
+  @HostBinding('style.clip')
+  clip = this.sanitizer.bypassSecurityTrustStyle('rect(0,0,0,0)');
 
   /**
    * If `true`, the checkbox button will be disabled
@@ -56,7 +62,7 @@ export class NgbCheckBox implements ControlValueAccessor {
     }
   }
 
-  constructor(private _label: NgbButtonLabel, private _cd: ChangeDetectorRef) {}
+  constructor(private _label: NgbButtonLabel, private _cd: ChangeDetectorRef, private sanitizer: DomSanitizer) {}
 
   onInputChange($event) {
     const modelToPropagate = $event.target.checked ? this.valueChecked : this.valueUnChecked;

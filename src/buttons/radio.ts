@@ -1,7 +1,8 @@
-import {ChangeDetectorRef, Directive, ElementRef, forwardRef, Input, OnDestroy, Renderer2} from '@angular/core';
+import {ChangeDetectorRef, Directive, ElementRef, forwardRef, HostBinding, Input, OnDestroy, Renderer2} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 import {NgbButtonLabel} from './label';
+import {DomSanitizer} from '@angular/platform-browser';
 
 const NGB_RADIO_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -81,13 +82,18 @@ export class NgbRadioGroup implements ControlValueAccessor {
     '[name]': 'nameAttr',
     '(change)': 'onChange()',
     '(focus)': 'focused = true',
-    '(blur)': 'focused = false'
+    '(blur)': 'focused = false',
+    '[style.position]': '"absolute"',
+    '[style.pointer-events]': '"none"'
   }
 })
 export class NgbRadio implements OnDestroy {
   private _checked: boolean;
   private _disabled: boolean;
   private _value: any = null;
+
+  @HostBinding('style.clip')
+  clip = this.sanitizer.bypassSecurityTrustStyle('rect(0,0,0,0)');
 
   /**
    * The value for the 'name' property of the input element.
@@ -136,7 +142,7 @@ export class NgbRadio implements OnDestroy {
 
   constructor(
       private _group: NgbRadioGroup, private _label: NgbButtonLabel, private _renderer: Renderer2,
-      private _element: ElementRef<HTMLInputElement>, private _cd: ChangeDetectorRef) {
+      private _element: ElementRef<HTMLInputElement>, private _cd: ChangeDetectorRef, private sanitizer: DomSanitizer) {
     this._group.register(this);
     this.updateDisabled();
   }
