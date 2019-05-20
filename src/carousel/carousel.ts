@@ -50,7 +50,7 @@ export class NgbSlide {
   exportAs: 'ngbCarousel',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'carousel slide',
+    'class': 'carousel',
     '[style.display]': '"block"',
     'tabIndex': '0',
     '(mouseenter)': 'pauseOnHover && pause()',
@@ -59,23 +59,25 @@ export class NgbSlide {
     '(keydown.arrowRight)': 'keyboard && next()'
   },
   template: `
-    <ol class="carousel-indicators" *ngIf="showNavigationIndicators">
-      <li *ngFor="let slide of slides" [id]="slide.id" [class.active]="slide.id === activeId"
-          (click)="select(slide.id); pauseOnHover && pause()"></li>
-    </ol>
     <div class="carousel-inner">
-      <div *ngFor="let slide of slides" class="carousel-item" [class.active]="slide.id === activeId">
+      <div *ngFor="let slide of slides" class="item" [class.active]="slide.id === activeId">
         <ng-template [ngTemplateOutlet]="slide.tplRef"></ng-template>
       </div>
     </div>
-    <a class="carousel-control-prev" role="button" (click)="prev()" *ngIf="showNavigationArrows">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <a class="left carousel-control" role="button" (click)="prev()" *ngIf="showNavigationArrows">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
       <span class="sr-only" i18n="@@ngb.carousel.previous">Previous</span>
     </a>
-    <a class="carousel-control-next" role="button" (click)="next()" *ngIf="showNavigationArrows">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <a class="right carousel-control" role="button" (click)="next()" *ngIf="showNavigationArrows">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
       <span class="sr-only" i18n="@@ngb.carousel.next">Next</span>
     </a>
+    <ol class="carousel-indicators" *ngIf="showNavigationIndicators">
+      <li *ngFor="let slide of slides; let i = index" [id]="slide.id" [class.active]="slide.id === activeId"
+          (click)="select(slide.id); pauseOnHover && pause()">
+        <span class="sr-only">slide {{i}} of {{slides.length}}</span>
+      </li>
+    </ol>
   `
 })
 export class NgbCarousel implements AfterContentChecked,
