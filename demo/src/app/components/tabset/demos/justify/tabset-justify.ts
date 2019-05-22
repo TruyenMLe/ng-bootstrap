@@ -5,5 +5,5 @@ import {Component} from '@angular/core';
   templateUrl: './tabset-justify.html'
 })
 export class NgbdTabsetJustify {
-  currentJustify = 'start';
+  currentJustify = 'justified';
  }

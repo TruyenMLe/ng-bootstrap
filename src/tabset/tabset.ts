@@ -98,9 +98,9 @@ export interface NgbTabChangeEvent {
   selector: 'ngb-tabset',
   exportAs: 'ngbTabset',
   template: `
-    <ul [class]="'nav nav-' + type + (orientation == 'horizontal'?  ' ' + justifyClass : ' flex-column')" role="tablist">
-      <li class="nav-item" *ngFor="let tab of tabs">
-        <a [id]="tab.id" class="nav-link" [class.active]="tab.id === activeId" [class.disabled]="tab.disabled"
+    <ul [class]="'nav nav-' + type + (orientation == 'horizontal'?  ' ' + justifyClass : ' nav-stacked')" role="tablist">
+      <li class="nav-item" *ngFor="let tab of tabs" [class.active]="tab.id === activeId">
+        <a [id]="tab.id" class="nav-link" [class.disabled]="tab.disabled"
           href (click)="select(tab.id); $event.preventDefault()" role="tab" [attr.tabindex]="(tab.disabled ? '-1': undefined)"
           [attr.aria-controls]="(!destroyOnHide || tab.id === activeId ? tab.id + '-panel' : null)"
           [attr.aria-expanded]="tab.id === activeId" [attr.aria-disabled]="tab.disabled">
