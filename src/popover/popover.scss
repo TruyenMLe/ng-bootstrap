@@ -1,38 +1,89 @@
-
-$arrow-size: 1rem;
-
 ngb-popover-window {
-  &.bs-popover-top .arrow,
-  &.bs-popover-bottom .arrow {
+  &.popover {
+    display: block;
+  }
+
+  &.bs-popover-top {
+    margin-bottom: 10px;
+  }
+
+  &.bs-popover-right {
+    margin-left: 10px;
+  }
+
+  &.bs-popover-bottom {
+    margin-top: 10px;
+  }
+
+  &.bs-popover-left {
+    margin-right: 10px;
+  }
+
+  &.bs-popover-top > .arrow {
+    bottom: -11px;
     left: 50%;
-    margin-left: -$arrow-size / 2;
+    margin-left: -11px;
+    border-top-color: #999999;
+    border-top-color: rgba(0, 0, 0, 0.25);
+    border-bottom-width: 0;
   }
 
-  &.bs-popover-top-left .arrow,
-  &.bs-popover-bottom-left .arrow {
-    left: 2em;
+  &.bs-popover-top > .arrow:after {
+    bottom: 1px;
+    margin-left: -10px;
+    content: " ";
+    border-top-color: #fff;
+    border-bottom-width: 0;
   }
 
-  &.bs-popover-top-right .arrow,
-  &.bs-popover-bottom-right .arrow {
-    left: auto;
-    right: 2em;
-  }
-
-  &.bs-popover-left .arrow,
-  &.bs-popover-right .arrow {
+  &.bs-popover-right > .arrow {
     top: 50%;
-    margin-top: -$arrow-size / 2;
+    left: -11px;
+    margin-top: -11px;
+    border-right-color: #999999;
+    border-right-color: rgba(0, 0, 0, 0.25);
+    border-left-width: 0;
   }
 
-  &.bs-popover-left-top .arrow,
-  &.bs-popover-right-top .arrow {
-    top: 0.7em;
+  &.bs-popover-right > .arrow:after {
+    bottom: -10px;
+    left: 1px;
+    content: " ";
+    border-right-color: #fff;
+    border-left-width: 0;
   }
 
-  &.bs-popover-left-bottom .arrow,
-  &.bs-popover-right-bottom .arrow {
-    top: auto;
-    bottom: 0.7em;
+  &.bs-popover-bottom > .arrow {
+    top: -11px;
+    left: 50%;
+    margin-left: -11px;
+    border-top-width: 0;
+    border-bottom-color: #999999;
+    border-bottom-color: rgba(0, 0, 0, 0.25);
+  }
+
+  &.bs-popover-bottom > .arrow:after {
+    top: 1px;
+    margin-left: -10px;
+    content: " ";
+    border-top-width: 0;
+    border-bottom-color: #fff;
+  }
+
+  &.bs-popover-left > .arrow {
+    top: 50%;
+    right: -11px;
+    margin-top: -11px;
+    border-right-width: 0;
+    border-left-color: #999999;
+    border-left-color: rgba(0, 0, 0, 0.25);
+  }
+
+  &.bs-popover-left > .arrow:after {
+    right: 1px;
+    bottom: -10px;
+    content: " ";
+    border-right-width: 0;
+    border-left-color: #fff;
   }
 }

@@ -40,11 +40,13 @@ let nextId = 0;
   host: {'[class]': '"popover" + (popoverClass ? " " + popoverClass : "")', 'role': 'tooltip', '[id]': 'id'},
   template: `
     <div class="arrow"></div>
-    <h3 class="popover-header" *ngIf="title != null">
+    <h3 class="popover-title" *ngIf="title != null">
       <ng-template #simpleTitle>{{title}}</ng-template>
       <ng-template [ngTemplateOutlet]="isTitleTemplate() ? title : simpleTitle" [ngTemplateOutletContext]="context"></ng-template>
     </h3>
-    <div class="popover-body"><ng-content></ng-content></div>`,
+    <div class="popover-inner">
+      <div class="popover-content"><ng-content></ng-content></div>
+    </div>`,
   styleUrls: ['./popover.scss']
 })
 export class NgbPopoverWindow {

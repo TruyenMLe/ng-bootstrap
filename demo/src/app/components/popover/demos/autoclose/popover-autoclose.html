@@ -5,7 +5,7 @@
   <li class="mb-2">
     click inside:
     <button
-      type="button" class="btn btn-outline-secondary" popoverTitle="Pop title"
+      type="button" class="btn btn-default" popoverTitle="Pop title"
       [autoClose]="'inside'" ngbPopover="Click inside or press Escape to close"
     >
         Click to toggle
@@ -15,7 +15,7 @@
   <li class="mb-2">
     click outside:
     <button
-      type="button" class="btn btn-outline-secondary" popoverTitle="Pop title"
+      type="button" class="btn btn-default" popoverTitle="Pop title"
       [autoClose]="'outside'" ngbPopover="Click outside or press Escape to close"
     >
       Click to toggle
@@ -25,14 +25,14 @@
   <li class="mb-2">
       all clicks:
       <button
-        type="button" class="btn btn-outline-secondary" popoverTitle="Pop title"
+        type="button" class="btn btn-default" popoverTitle="Pop title"
         [autoClose]="true" ngbPopover="Click anywhere or press Escape to close (try the toggling element too)"
         #popover3="ngbPopover"
       >
           Click to toggle
       </button>
       &nbsp;
-      <button type="button" class="btn btn-outline-secondary mr-2" (click)="popover3.toggle()">
+      <button type="button" class="btn btn-default mr-2" (click)="popover3.toggle()">
         Click to toggle the external popover
       </button>
     </li>

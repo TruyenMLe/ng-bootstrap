@@ -130,13 +130,27 @@ ngbd-table-complete span.ngb-highlight {
   padding-bottom: 30px;
 }
 
+.py-5 {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
 .pt-4 {
   padding-top: 40px;
+}
+
+.px-1 {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .px-4 {
   padding-left: 40px;
   padding-right: 40px;
+}
+
+.width-100-percent {
+  width: 100%;
 }
 
 @media (min-width: 1200px) {
