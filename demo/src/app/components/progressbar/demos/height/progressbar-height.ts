@@ -10,5 +10,5 @@ import {Component} from '@angular/core';
   `]
 })
 export class NgbdProgressbarHeight {
-  height = '20px';
+  height = '30px';
 }
