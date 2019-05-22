@@ -4,6 +4,6 @@
 Selected: <b>{{selected}}</b>
 Hovered: <b>{{hovered}}</b>
 </pre>
-<button class="btn btn-sm btn-outline-{{readonly ? 'danger' : 'success'}}" (click)="readonly = !readonly">
+<button class="btn btn-sm btn-{{readonly ? 'danger' : 'success'}}" (click)="readonly = !readonly">
   {{ readonly ? "readonly" : "editable"}}
 </button>
