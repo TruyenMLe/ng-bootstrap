@@ -1,44 +1,47 @@
 <p>Bootstrap split buttons and dropdowns on button groups are supported with the existing dropdown directives.</p>
 
 <div class="btn-group mr-3">
-  <button type="button" class="btn btn-outline-success">Plain ol' button</button>
+  <button type="button" class="btn btn-success">Plain ol' button</button>
   <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-    <button class="btn btn-outline-primary" ngbDropdownToggle>Drop me</button>
-    <div class="dropdown-menu" ngbDropdownMenu>
-      <button ngbDropdownItem>One</button>
-      <button ngbDropdownItem>Two</button>
-      <button ngbDropdownItem>Four!</button>
-    </div>
+    <button class="btn btn-default" ngbDropdownToggle>Drop me</button>
+    <ul class="dropdown-menu" ngbDropdownMenu>
+      <li ngbDropdownItem><a href="javascript:;">One</a></li>
+      <li ngbDropdownItem><a href="javascript:;">Two</a></li>
+      <li ngbDropdownItem><a href="javascript:;">Four!</a></li>
+    </ul>
   </div>
 </div>
 
 <div class="btn-group mr-3">
   <button type="button" class="btn btn-primary">Split me</button>
   <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-    <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
-    <div class="dropdown-menu" ngbDropdownMenu>
-      <button ngbDropdownItem>One</button>
-      <button ngbDropdownItem>Two</button>
-      <button ngbDropdownItem>Four!</button>
-    </div>
+    <button class="btn btn-primary dropdown-toggle" ngbDropdownToggle>
+      <span class="caret"></span>
+      <span class="sr-only">Split button!</span>
+    </button>
+    <ul class="dropdown-menu" ngbDropdownMenu>
+      <li ngbDropdownItem><a href="javascript:;">One</a></li>
+      <li ngbDropdownItem><a href="javascript:;">Two</a></li>
+      <li ngbDropdownItem><a href="javascript:;">Four!</a></li>
+    </ul>
   </div>
 </div>
 
 <div class="btn-group mr-3">
   <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-    <button class="btn btn-outline-danger" ngbDropdownToggle>Select me</button>
-    <div class="dropdown-menu" ngbDropdownMenu>
-      <button ngbDropdownItem>One</button>
-      <button ngbDropdownItem>Two</button>
-      <button ngbDropdownItem>Four!</button>
-    </div>
+    <button class="btn btn-danger" ngbDropdownToggle>Select me</button>
+    <ul class="dropdown-menu" ngbDropdownMenu>
+      <li ngbDropdownItem><a href="javascript:;">One</a></li>
+      <li ngbDropdownItem><a href="javascript:;">Two</a></li>
+      <li ngbDropdownItem><a href="javascript:;">Four!</a></li>
+    </ul>
   </div>
   <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-    <button class="btn btn-outline-success" ngbDropdownToggle>Or me</button>
-    <div class="dropdown-menu" ngbDropdownMenu>
-      <button ngbDropdownItem>One</button>
-      <button ngbDropdownItem>Two</button>
-      <button ngbDropdownItem>Four!</button>
-    </div>
+    <button class="btn btn-success" ngbDropdownToggle>Or me</button>
+    <ul class="dropdown-menu" ngbDropdownMenu>
+      <li ngbDropdownItem><a href="javascript:;">One</a></li>
+      <li ngbDropdownItem><a href="javascript:;">Two</a></li>
+      <li ngbDropdownItem><a href="javascript:;">Four!</a></li>
+    </ul>
   </div>
 </div>
