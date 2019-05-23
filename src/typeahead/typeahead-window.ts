@@ -18,22 +18,22 @@ export interface ResultTemplateContext {
 }
 
 @Component({
-  selector: 'ngb-typeahead-window',
+  selector: 'ul[ngbTypeaheadWindow]',
   exportAs: 'ngbTypeaheadWindow',
   host: {'(mousedown)': '$event.preventDefault()', 'class': 'dropdown-menu show', 'role': 'listbox', '[id]': 'id'},
   template: `
     <ng-template #rt let-result="result" let-term="term" let-formatter="formatter">
-      <ngb-highlight [result]="formatter(result)" [term]="term"></ngb-highlight>
+      <a href="javascript:;"><ngb-highlight [result]="formatter(result)" [term]="term"></ngb-highlight></a>
     </ng-template>
     <ng-template ngFor [ngForOf]="results" let-result let-idx="index">
-      <button type="button" class="dropdown-item" role="option"
+      <li role="option"
         [id]="id + '-' + idx"
         [class.active]="idx === activeIdx"
         (mouseenter)="markActive(idx)"
         (click)="select(result)">
           <ng-template [ngTemplateOutlet]="resultTemplate || rt"
           [ngTemplateOutletContext]="{result: result, term: term, formatter: formatter}"></ng-template>
-      </button>
+      </li>
     </ng-template>
   `
 })
