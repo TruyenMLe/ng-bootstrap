@@ -80,7 +80,7 @@ export class NgbDatepickerI18nDefault extends NgbDatepickerI18n {
   constructor(@Inject(LOCALE_ID) private _locale: string) {
     super();
 
-    const weekdaysStartingOnSunday = getLocaleDayNames(_locale, FormStyle.Standalone, TranslationWidth.Short);
+    const weekdaysStartingOnSunday = getLocaleDayNames(_locale, FormStyle.Standalone, TranslationWidth.Abbreviated);
     this._weekdaysShort = weekdaysStartingOnSunday.map((day, index) => weekdaysStartingOnSunday[(index + 1) % 7]);
 
     this._monthsShort = getLocaleMonthNames(_locale, FormStyle.Standalone, TranslationWidth.Abbreviated);

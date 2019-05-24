@@ -14,13 +14,13 @@ export class NgbDatepickerConfig {
   dayTemplateData: (date: NgbDateStruct, current: {year: number, month: number}) => any;
   footerTemplate: TemplateRef<any>;
   displayMonths = 1;
-  firstDayOfWeek = 1;
+  firstDayOfWeek = 7;
   markDisabled: (date: NgbDateStruct, current: {year: number, month: number}) => boolean;
   minDate: NgbDateStruct;
   maxDate: NgbDateStruct;
   navigation: 'select' | 'arrows' | 'none' = 'select';
   outsideDays: 'visible' | 'collapsed' | 'hidden' = 'visible';
   showWeekdays = true;
-  showWeekNumbers = false;
+  showWeekNumbers = true;
   startDate: {year: number, month: number};
 }

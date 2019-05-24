@@ -56,3 +56,24 @@ ngb-datepicker {
     }
   }
 }
+
+.well {
+  margin-bottom: 0;
+}
+
+.current-date {
+  color: #31708f !important;
+}
+
+.week-day {
+  text-align: center;
+}
+
+.month-name {
+  text-align: center;
+  font-size: 18px;
+}
+
+.visibility-hidden {
+  visibility: hidden;
+}

@@ -24,7 +24,7 @@ import {NgbCalendar} from './ngb-calendar';
 import {NgbDate} from './ngb-date';
 import {NgbDatepickerService} from './datepicker-service';
 import {NgbDatepickerKeyMapService} from './datepicker-keymap-service';
-import {DatepickerViewModel, NavigationEvent} from './datepicker-view-model';
+import {DatepickerViewModel, DayViewModel, NavigationEvent} from './datepicker-view-model';
 import {DayTemplateContext} from './datepicker-day-template-context';
 import {NgbDatepickerConfig} from './datepicker-config';
 import {NgbDateAdapter} from './adapters/ngb-date-adapter';
@@ -73,49 +73,76 @@ export interface NgbDatepickerNavigateEvent {
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./datepicker.scss'],
   template: `
-    <ng-template #dt let-date="date" let-currentMonth="currentMonth" let-selected="selected" let-disabled="disabled" let-focused="focused">
-      <div ngbDatepickerDayView
-        [date]="date"
-        [currentMonth]="currentMonth"
-        [selected]="selected"
-        [disabled]="disabled"
-        [focused]="focused">
-      </div>
-    </ng-template>
-
-    <div class="ngb-dp-header bg-light">
-      <ngb-datepicker-navigation *ngIf="navigation !== 'none'"
-        [date]="model.firstDate"
-        [months]="model.months"
-        [disabled]="model.disabled"
-        [showSelect]="model.navigation === 'select'"
-        [prevDisabled]="model.prevDisabled"
-        [nextDisabled]="model.nextDisabled"
-        [selectBoxes]="model.selectBoxes"
-        (navigate)="onNavigateEvent($event)"
-        (select)="onNavigateDateSelect($event)">
-      </ngb-datepicker-navigation>
-    </div>
-
-    <div #months class="ngb-dp-months" (keydown)="onKeyDown($event)">
-      <ng-template ngFor let-month [ngForOf]="model.months" let-i="index">
-        <div class="ngb-dp-month">
-          <div *ngIf="navigation === 'none' || (displayMonths > 1 && navigation === 'select')"
-                class="ngb-dp-month-name bg-light">
-            {{ i18n.getMonthFullName(month.number, month.year) }} {{ i18n.getYearNumerals(month.year) }}
+    <div class="well well-sm">
+      <table>
+        <thead>
+        <tr ngbDatepickerNavigation
+          *ngIf="navigation !== 'none'"
+          [date]="model.firstDate"
+          [months]="model.months"
+          [disabled]="model.disabled"
+          [showSelect]="model.navigation === 'select'"
+          [prevDisabled]="model.prevDisabled"
+          [nextDisabled]="model.nextDisabled"
+          [selectBoxes]="model.selectBoxes"
+          (navigate)="onNavigateEvent($event)"
+          (select)="onNavigateDateSelect($event)">
+        </tr>
+        </thead>
+        <tbody #months (keydown)="onKeyDown($event)">
+        <ng-template #dt let-date="date" let-currentMonth="currentMonth" let-selected="selected" let-disabled="disabled"
+                     let-focused="focused">
+          <div ngbDatepickerDayView
+               [date]="date"
+               [currentMonth]="currentMonth"
+               [selected]="selected"
+               [disabled]="disabled"
+               [focused]="focused">
           </div>
-          <ngb-datepicker-month-view
-            [month]="month"
-            [dayTemplate]="dayTemplate || dt"
-            [showWeekdays]="showWeekdays"
-            [showWeekNumbers]="showWeekNumbers"
-            (select)="onDateSelect($event)">
-          </ngb-datepicker-month-view>
-        </div>
-      </ng-template>
-    </div>
+        </ng-template>
+        <ng-template ngFor let-month [ngForOf]="model.months" let-i="index">
+          <tr *ngIf="navigation === 'none' || (displayMonths > 1 && navigation === 'select')">
+            <td colspan="8" class="month-name">
+              {{ i18n.getMonthFullName(month.number, month.year) }} {{ i18n.getYearNumerals(month.year) }}
+            </td>
+          </tr>
+          <ng-container *ngIf="showWeekdays">
+            <tr>
+              <th *ngIf="showWeekNumbers"></th>
+              <th class="week-day" *ngFor="let w of month.weekdays">
+                <small>{{ i18n.getWeekdayShortName(w) }}</small>
+              </th>
+            </tr>
+          </ng-container>
+          <ng-template ngFor let-week [ngForOf]="month.weeks">
+            <tr *ngIf="!week.collapsed" class="ngb-dp-week" role="row">
+              <td *ngIf="showWeekNumbers" class="text-center h6">
+                <em>{{ i18n.getWeekNumerals(week.number) }}</em>
+              </td>
+              <td *ngFor="let day of week.days" (click)="doSelect(day)" class="uib-day text-center" role="gridcell"
+                  [class.disabled]="day.context.disabled"
+                  [tabindex]="day.tabindex"
+                  [class.visibility-hidden]="day.hidden"
+                  [class.ngb-dp-today]="day.context.today"
+                  [attr.aria-label]="day.ariaLabel">
+                <button type="button" class="btn btn-default btn-sm"
+                        [ngClass]="{
+                          'btn-info active': (model.selectedDate === day.date) || (day.context.today && !model.selectedDate),
+                          'current-date': day.context.today
+                        }">
+                  <ng-template [ngIf]="!day.hidden">
+                    <ng-template [ngTemplateOutlet]="dayTemplate || dt" [ngTemplateOutletContext]="day.context"></ng-template>
+                  </ng-template>
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </ng-template>
 
-    <ng-template [ngTemplateOutlet]="footerTemplate"></ng-template>
+        <ng-template [ngTemplateOutlet]="footerTemplate"></ng-template>
+        </tbody>
+      </table>
+    </div>
   `,
   providers: [NGB_DATEPICKER_VALUE_ACCESSOR, NgbDatepickerService, NgbDatepickerKeyMapService]
 })
@@ -296,6 +323,12 @@ export class NgbDatepicker implements OnDestroy,
 
       _cd.markForCheck();
     });
+  }
+
+  doSelect(day: DayViewModel) {
+    if (!day.context.disabled && !day.hidden) {
+      this.onDateSelect(day.date);
+    }
   }
 
   focus() {
