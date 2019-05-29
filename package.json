@@ -1,8 +1,8 @@
 {
-  "name": "@ng-bootstrap/ng-bootstrap",
-  "version": "4.2.0",
-  "description": "Angular powered Bootstrap",
-  "author": "https://github.com/ng-bootstrap/ng-bootstrap/graphs/contributors",
+  "name": "ar-bootstrap",
+  "version": "1.0.0",
+  "description": "Angular powered Bootstrap 3",
+  "author": "Truyen Le",
   "engines": {
     "node": ">=10.9",
     "yarn": ">=1.3.0 <2.0.0"
@@ -47,13 +47,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ng-bootstrap/ng-bootstrap.git"
+    "url": "git+https://github.com/TruyenMLe/ng-bootstrap.git"
   },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ng-bootstrap/ng-bootstrap/issues"
-  },
-  "homepage": "https://github.com/ng-bootstrap/ng-bootstrap#readme",
+  "homepage": "https://github.com/TruyenMLe/ng-bootstrap#readme",
   "dependencies": {},
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.0",
