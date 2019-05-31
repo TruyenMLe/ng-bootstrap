@@ -1,9 +1,9 @@
 {
   "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../dist/ng-bootstrap",
+  "dest": "../dist/ar-bootstrap",
   "deleteDestPath": false,
   "lib": {
-    "flatModuleFile": "ng-bootstrap",
+    "flatModuleFile": "ar-bootstrap",
     "entryFile": "./index.ts",
     "umdId": "ngb",
     "amdId": "ngb"
