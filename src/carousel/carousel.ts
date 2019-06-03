@@ -26,6 +26,16 @@ import {filter, map, switchMap, takeUntil} from 'rxjs/operators';
 
 let nextId = 0;
 
+@Directive({selector: 'ng-template[ngbCarouselLeftControl]'})
+export class NgbCarouselLeftControl {
+  constructor(public templateRef: TemplateRef<any>) {}
+}
+
+@Directive({selector: 'ng-template[ngbCarouselRightControl]'})
+export class NgbCarouselRightControl {
+  constructor(public templateRef: TemplateRef<any>) {}
+}
+
 /**
  * A directive that wraps the individual carousel slide.
  */
@@ -64,14 +74,26 @@ export class NgbSlide {
         <ng-template [ngTemplateOutlet]="slide.tplRef"></ng-template>
       </div>
     </div>
-    <a class="left carousel-control" role="button" (click)="prev()" *ngIf="showNavigationArrows">
-      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-      <span class="sr-only" i18n="@@ngb.carousel.previous">Previous</span>
-    </a>
-    <a class="right carousel-control" role="button" (click)="next()" *ngIf="showNavigationArrows">
-      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      <span class="sr-only" i18n="@@ngb.carousel.next">Next</span>
-    </a>
+    <ng-container *ngIf="showNavigationArrows">
+      <ng-template #lct ngbCarouselLeftControl>
+        <a class="left carousel-control" role="button" (click)="prev()">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only" i18n="@@ngb.carousel.previous">Previous</span>
+        </a>
+      </ng-template>
+      <ng-template [ngTemplateOutlet]="leftControlTpl?.templateRef || lct"
+                   [ngTemplateOutletContext]="{$implicit: this}"></ng-template>
+    </ng-container>
+    <ng-container *ngIf="showNavigationArrows">
+      <ng-template #rct ngbCarouselRightControl>
+        <a class="right carousel-control" role="button" (click)="next()">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only" i18n="@@ngb.carousel.next">Next</span>
+        </a>
+      </ng-template>
+      <ng-template [ngTemplateOutlet]="rightControlTpl?.templateRef || rct"
+                   [ngTemplateOutletContext]="{$implicit: this}"></ng-template>
+    </ng-container>
     <ol class="carousel-indicators" *ngIf="showNavigationIndicators">
       <li *ngFor="let slide of slides; let i = index" [id]="slide.id" [class.active]="slide.id === activeId"
           (click)="select(slide.id); pauseOnHover && pause()">
@@ -138,6 +160,11 @@ export class NgbCarousel implements AfterContentChecked,
    */
   @Output() slide = new EventEmitter<NgbSlideEvent>();
 
+  leftControlTpl: NgbCarouselLeftControl | null;
+  rightControlTpl: NgbCarouselRightControl | null;
+  @ContentChildren(NgbCarouselLeftControl, {descendants: false}) leftControlTpls: QueryList<NgbCarouselLeftControl>;
+  @ContentChildren(NgbCarouselRightControl, {descendants: false}) rightControlTpls: QueryList<NgbCarouselRightControl>;
+
   constructor(
       config: NgbCarouselConfig, @Inject(PLATFORM_ID) private _platformId, private _ngZone: NgZone,
       private _cd: ChangeDetectorRef) {
@@ -170,6 +197,8 @@ export class NgbCarousel implements AfterContentChecked,
   ngAfterContentChecked() {
     let activeSlide = this._getSlideById(this.activeId);
     this.activeId = activeSlide ? activeSlide.id : (this.slides.length ? this.slides.first.id : null);
+    this.leftControlTpl = this.leftControlTpls.first;
+    this.rightControlTpl = this.rightControlTpls.first;
   }
 
   ngOnDestroy() { this._destroy$.next(); }
@@ -279,4 +308,4 @@ export enum NgbSlideEventDirection {
   RIGHT = <any>'right'
 }
 
-export const NGB_CAROUSEL_DIRECTIVES = [NgbCarousel, NgbSlide];
+export const NGB_CAROUSEL_DIRECTIVES = [NgbCarousel, NgbCarouselLeftControl, NgbCarouselRightControl, NgbSlide];
