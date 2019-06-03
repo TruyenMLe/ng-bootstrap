@@ -188,7 +188,7 @@ export interface NgbPanelChangeEvent {
       </h4>
     </ng-template>
     <ng-template ngFor let-panel [ngForOf]="panels">
-      <div [class]="(panel.type ? 'panel-'+panel.type: type ? 'panel-'+type : '') + ' panel'">
+      <div [class]="(panel.type ? 'panel-'+panel.type: type ? 'panel-'+type : '') + ' panel' + (panel.isOpen ? ' panel-open' : '')">
         <div role="tab" id="{{panel.id}}-header" [class]="'panel-heading'">
           <ng-template [ngTemplateOutlet]="panel.headerTpl?.templateRef || t"
                        [ngTemplateOutletContext]="{$implicit: panel, opened: panel.isOpen}"></ng-template>
