@@ -18,7 +18,7 @@ import {ModalDismissReasons} from './modal-dismiss-reasons';
 @Component({
   selector: 'ngb-modal-window',
   host: {
-    '[class]': '"modal fade in" + (windowClass ? " " + windowClass : "")',
+    '[class]': '"modal fade modal-wrapper in" + (windowClass ? " " + windowClass : "")',
     'role': 'dialog',
     'tabindex': '-1',
     '(keyup.esc)': 'escKey($event)',
