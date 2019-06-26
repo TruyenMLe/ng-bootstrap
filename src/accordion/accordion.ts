@@ -41,7 +41,7 @@ export interface NgbPanelHeaderContext {
  * @since 4.1.0
  */
 @Directive({
-  selector: 'a[ngbPanelToggle]',
+  selector: '[ngbPanelToggle]',
   host: {
     '[attr.disabled]': 'panel.disabled',
     '[attr.aria-expanded]': 'panel.isOpen',
@@ -179,28 +179,54 @@ export interface NgbPanelChangeEvent {
   exportAs: 'ngbAccordion',
   host: {'class': 'panel-group', 'role': 'tablist', '[attr.aria-multiselectable]': '!closeOtherPanels'},
   template: `
-    <ng-template #t ngbPanelHeader let-panel>
-      <h4 class="panel-title">
-        <a href="javascript:;" class="accordion-toggle" [ngbPanelToggle]="panel">
-          <span [ngClass]="{'text-muted': panel.disabled}">{{panel.title}}</span>
-          <ng-template [ngTemplateOutlet]="panel.titleTpl?.templateRef"></ng-template>
-        </a>
-      </h4>
-    </ng-template>
-    <ng-template ngFor let-panel [ngForOf]="panels">
-      <div [class]="(panel.type ? 'panel-'+panel.type: type ? 'panel-'+type : '') + ' panel' + (panel.isOpen ? ' panel-open' : '')">
-        <div role="tab" id="{{panel.id}}-header" [class]="'panel-heading'">
-          <ng-template [ngTemplateOutlet]="panel.headerTpl?.templateRef || t"
-                       [ngTemplateOutletContext]="{$implicit: panel, opened: panel.isOpen}"></ng-template>
-        </div>
-        <div id="{{panel.id}}" role="tabpanel" [attr.aria-labelledby]="panel.id + '-header'" #panelContent
-             class="panel-collapse" [@openClose]="panel.isOpen ? 'collapseIn' : 'collapse'">
-          <div class="panel-body">
-               <ng-template [ngTemplateOutlet]="panel.contentTpl?.templateRef"></ng-template>
+    <ng-container *ngIf="!fullHeader">
+      <ng-template #t ngbPanelHeader let-panel>
+        <h4 class="panel-title">
+          <a href="javascript:;" class="accordion-toggle" [ngbPanelToggle]="panel">
+            <span [ngClass]="{'text-muted': panel.disabled}">{{panel.title}}</span>
+            <ng-template [ngTemplateOutlet]="panel.titleTpl?.templateRef"></ng-template>
+          </a>
+        </h4>
+      </ng-template>
+      <ng-template ngFor let-panel [ngForOf]="panels">
+        <div [class]="(panel.type ? 'panel-'+panel.type: type ? 'panel-'+type : '') + ' panel' + (panel.isOpen ? ' panel-open' : '')">
+          <div role="tab" id="{{panel.id}}-header" [class]="'panel-heading'">
+            <ng-template [ngTemplateOutlet]="panel.headerTpl?.templateRef || t"
+                         [ngTemplateOutletContext]="{$implicit: panel, opened: panel.isOpen}"></ng-template>
+          </div>
+          <div id="{{panel.id}}" role="tabpanel" [attr.aria-labelledby]="panel.id + '-header'" #panelContent
+               class="panel-collapse" [@openClose]="panel.isOpen ? 'collapseIn' : 'collapse'">
+            <div class="panel-body">
+              <ng-template [ngTemplateOutlet]="panel.contentTpl?.templateRef"></ng-template>
+            </div>
           </div>
         </div>
-      </div>
-    </ng-template>
+      </ng-template>
+    </ng-container>
+    <ng-container *ngIf="fullHeader">
+      <ng-template #t ngbPanelHeader let-panel>
+        <h4 class="panel-title">
+          <a href="javascript:;" class="accordion-toggle">
+            <span [ngClass]="{'text-muted': panel.disabled}">{{panel.title}}</span>
+            <ng-template [ngTemplateOutlet]="panel.titleTpl?.templateRef"></ng-template>
+          </a>
+        </h4>
+      </ng-template>
+      <ng-template ngFor let-panel [ngForOf]="panels">
+        <div [class]="(panel.type ? 'panel-'+panel.type: type ? 'panel-'+type : '') + ' panel' + (panel.isOpen ? ' panel-open' : '')">
+          <div role="tab" id="{{panel.id}}-header" [class]="'panel-heading'" [ngbPanelToggle]="panel" style="cursor: pointer">
+            <ng-template [ngTemplateOutlet]="panel.headerTpl?.templateRef || t"
+                         [ngTemplateOutletContext]="{$implicit: panel, opened: panel.isOpen}"></ng-template>
+          </div>
+          <div id="{{panel.id}}" role="tabpanel" [attr.aria-labelledby]="panel.id + '-header'" #panelContent
+               class="panel-collapse" [@openClose]="panel.isOpen ? 'collapseIn' : 'collapse'">
+            <div class="panel-body">
+              <ng-template [ngTemplateOutlet]="panel.contentTpl?.templateRef"></ng-template>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
   `,
   animations: [
     trigger('openClose', [
@@ -251,6 +277,13 @@ export class NgbAccordion implements AfterContentChecked {
    * `'secondary'`, `'light'` and `'dark'`.
    */
   @Input() type: string;
+
+  /**
+   * Header link position
+   *
+   * When user hovers over header, either it's clickable in full header div or only anchor tag inside.
+   */
+  @Input() fullHeader = true;
 
   /**
    * Event emitted right before the panel toggle happens.
